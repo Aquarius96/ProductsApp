@@ -10,5 +10,6 @@ namespace ProductsApp.Logic.Interfaces
         Task<Result<Product>> GetById(int id);
         Task<Result<IEnumerable<Product>>> GetAllActive();
         Task<Result<Product>> Remove(Product product);
+        Task<Result<Product>> Update(Product product);
     }
 }

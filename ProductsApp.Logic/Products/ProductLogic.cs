@@ -63,5 +63,21 @@ namespace ProductsApp.Logic.Products
             await _repository.SaveChanges();
             return Result.Ok(product);
         }
+
+        public async Task<Result<Product>> Update(Product product)
+        {
+            if(product == null)
+            {
+                throw new ArgumentException(nameof(product));
+            }
+
+            var productFromDatabase = await _repository.GetById(product.Id);
+            productFromDatabase.Name = product.Name;
+            productFromDatabase.Description = product.Description;
+            productFromDatabase.Price = product.Price;
+
+            await _repository.SaveChanges();
+            return Result.Ok(product);
+        }
     }
 }

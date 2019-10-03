@@ -107,5 +107,21 @@ namespace ProductsApp.WebApi.Controllers
 
             return NoContent();
         }
+
+        [HttpPut]
+        [ProducesResponseType(200, Type = typeof(ProductDto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Update(Product product)
+        {            
+            var result = await _logic.Update(product);
+
+            if (!result.Success)
+            {
+                result.AddErrorToModelState(ModelState);
+                return BadRequest(ModelState);
+            }
+
+            return Ok(product);
+        }
     }
 }
