@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductsApp.Models\ProductsApp.Models.csproj" />
+    <PackageReference Include="FluentValidation" Version="8.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\ProductsApp.Models\ProductsApp.Models.csproj" />
   </ItemGroup>
 
 </Project>
