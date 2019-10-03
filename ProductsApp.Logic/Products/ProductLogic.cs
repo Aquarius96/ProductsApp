@@ -1,5 +1,6 @@
 ﻿using ProductsApp.Logic.Interfaces;
 using ProductsApp.Logic.Repositories;
+using ProductsApp.Logic.Services.Interfaces;
 using ProductsApp.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,13 @@ namespace ProductsApp.Logic.Products
     public class ProductLogic : IProductLogic
     {
         private readonly IProductRepository _repository;
+        private readonly IDateService _dateService;
 
-        public ProductLogic(IProductRepository repository)
+        public ProductLogic(IProductRepository repository,
+            IDateService dateService)
         {
             _repository = repository;
+            _dateService = dateService;
         }
         public async Task<Result<Product>> Create(Product product)
         {
@@ -22,7 +26,7 @@ namespace ProductsApp.Logic.Products
                 throw new ArgumentNullException(nameof(product));
             }
 
-            product.CreationDate = DateTime.UtcNow;
+            product.CreationDate = _dateService.UtcNow;
 
             await _repository.Add(product);
             await _repository.SaveChanges();

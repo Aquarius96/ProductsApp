@@ -8,6 +8,8 @@ using ProductsApp.DataAccess;
 using ProductsApp.Logic.Interfaces;
 using ProductsApp.Logic.Products;
 using ProductsApp.Logic.Repositories;
+using ProductsApp.Logic.Services;
+using ProductsApp.Logic.Services.Interfaces;
 
 namespace ProductsApp.WebApi
 {
@@ -30,6 +32,7 @@ namespace ProductsApp.WebApi
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductLogic, ProductLogic>();
+            services.AddScoped<IDateService, DateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
