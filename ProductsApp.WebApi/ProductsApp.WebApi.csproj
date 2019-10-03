@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ProductsApp.DataAccess\ProductsApp.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
