@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,8 +28,12 @@ namespace ProductsApp.WebApi
         {
             services.AddControllers();
 
+            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection"))
+            {
+                Password = Configuration["databasePassword"]
+            };
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.ConnectionString));
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductLogic, ProductLogic>();
