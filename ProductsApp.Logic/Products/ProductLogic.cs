@@ -71,10 +71,7 @@ namespace ProductsApp.Logic.Products
                 throw new ArgumentException(nameof(product));
             }
 
-            var productFromDatabase = await _repository.GetById(product.Id);
-            productFromDatabase.Name = product.Name;
-            productFromDatabase.Description = product.Description;
-            productFromDatabase.Price = product.Price;
+            _repository.Update(product);
 
             await _repository.SaveChanges();
             return Result.Ok(product);

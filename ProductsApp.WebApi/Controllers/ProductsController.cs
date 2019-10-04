@@ -108,11 +108,16 @@ namespace ProductsApp.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(ProductDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Update(Product product)
-        {            
+        public async Task<IActionResult> Update(int id, Product product)
+        {
+            if(id != product.Id)
+            {
+                return BadRequest();
+            }
+
             var result = await _logic.Update(product);
 
             if (!result.Success)

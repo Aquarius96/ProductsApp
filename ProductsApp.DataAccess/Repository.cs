@@ -9,7 +9,7 @@ namespace ProductsApp.DataAccess
 {
     public abstract class Repository<T> : IRepository<T> where T : BaseModel
     {
-        private readonly DataContext _db;        
+        protected readonly DataContext _db;
 
         protected Repository(DataContext db)
         {
