@@ -42,7 +42,7 @@ namespace ProductsApp.WebApi.Controllers
             }
 
             productDto.Id = result.Value.Id;
-            productDto.CreationDate = result.Value.CreationDate;
+            productDto.CreatedDate = result.Value.CreatedDate;
 
             return CreatedAtAction(nameof(Create), productDto);
         }
@@ -60,7 +60,7 @@ namespace ProductsApp.WebApi.Controllers
                 Name = p.Name,
                 Description = p.Description,
                 Price = p.Price,
-                CreationDate = p.CreationDate
+                CreatedDate = p.CreatedDate
             });
             return Ok(productsToReturn);
         }
@@ -83,7 +83,7 @@ namespace ProductsApp.WebApi.Controllers
                 Name = result.Value.Name,
                 Description = result.Value.Description,
                 Price = result.Value.Price,
-                CreationDate = result.Value.CreationDate
+                CreatedDate = result.Value.CreatedDate
             };
             return Ok(productToReturn);
         }
@@ -111,14 +111,26 @@ namespace ProductsApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(ProductDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Update(int id, Product product)
+        public async Task<IActionResult> Update(int id, ProductDto productDto)
         {
-            if(id != product.Id)
+            if(id != productDto.Id)
             {
                 return BadRequest();
             }
 
-            var result = await _logic.Update(product);
+            var productResult = await _logic.GetById(id);
+
+            if (!productResult.Success)
+            {
+                productResult.AddErrorToModelState(ModelState);
+                return BadRequest(ModelState);
+            }
+
+            productResult.Value.Name = productDto.Name;
+            productResult.Value.Description = productDto.Description;
+            productResult.Value.Price = productDto.Price;
+
+            var result = await _logic.Update(productResult.Value);
 
             if (!result.Success)
             {
@@ -126,7 +138,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(product);
+            return Ok(productDto);
         }
     }
 }

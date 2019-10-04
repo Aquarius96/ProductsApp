@@ -10,23 +10,19 @@ namespace ProductsApp.Logic.Products
 {
     public class ProductLogic : IProductLogic
     {
-        private readonly IProductRepository _repository;
-        private readonly IDateService _dateService;
+        private readonly IProductRepository _repository;        
 
         public ProductLogic(IProductRepository repository,
             IDateService dateService)
         {
-            _repository = repository;
-            _dateService = dateService;
+            _repository = repository;            
         }
         public async Task<Result<Product>> Create(Product product)
         {
             if(product == null)
             {
                 throw new ArgumentNullException(nameof(product));
-            }
-
-            product.CreationDate = _dateService.UtcNow;
+            }            
 
             await _repository.Add(product);
             await _repository.SaveChanges();
@@ -56,7 +52,7 @@ namespace ProductsApp.Logic.Products
         {
             if(product == null)
             {
-                throw new ArgumentException(nameof(product));
+                throw new ArgumentNullException(nameof(product));
             }
 
             _repository.Delete(product);
@@ -68,10 +64,8 @@ namespace ProductsApp.Logic.Products
         {
             if(product == null)
             {
-                throw new ArgumentException(nameof(product));
-            }
-
-            _repository.Update(product);
+                throw new ArgumentNullException(nameof(product));
+            }            
 
             await _repository.SaveChanges();
             return Result.Ok(product);
