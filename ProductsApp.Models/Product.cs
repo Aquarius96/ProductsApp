@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProductsApp.Models
+﻿namespace ProductsApp.Models
 {
     public class Product : BaseModel
     {

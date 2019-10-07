@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductsApp.Logic;
 using ProductsApp.Logic.Interfaces;
@@ -41,8 +39,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            productDto.Id = result.Value.Id;
-            productDto.CreatedDate = result.Value.CreatedDate;
+            productDto.Id = result.Value.Id;            
 
             return CreatedAtAction(nameof(Create), productDto);
         }
@@ -59,8 +56,7 @@ namespace ProductsApp.WebApi.Controllers
                 Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
-                Price = p.Price,
-                CreatedDate = p.CreatedDate
+                Price = p.Price                
             });
             return Ok(productsToReturn);
         }
@@ -82,8 +78,7 @@ namespace ProductsApp.WebApi.Controllers
                 Id = result.Value.Id,
                 Name = result.Value.Name,
                 Description = result.Value.Description,
-                Price = result.Value.Price,
-                CreatedDate = result.Value.CreatedDate
+                Price = result.Value.Price                
             };
             return Ok(productToReturn);
         }

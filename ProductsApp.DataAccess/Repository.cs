@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductsApp.Logic.Repositories;
-using ProductsApp.Logic.Services.Interfaces;
 using ProductsApp.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +9,15 @@ namespace ProductsApp.DataAccess
 {
     public abstract class Repository<T> : IRepository<T> where T : BaseModel
     {
-        protected readonly DataContext _db;
-        protected readonly IDateService _dateService;
+        protected readonly DataContext _db;        
 
-        protected Repository(DataContext db, IDateService dateService)
+        protected Repository(DataContext db)
         {
-            _db = db;
-            _dateService = dateService;
+            _db = db;            
         }
 
         public async Task Add(T model)
-        {
-            model.CreatedDate = _dateService.UtcNow;
+        {            
             await _db.Set<T>().AddAsync(model);
         }
 
