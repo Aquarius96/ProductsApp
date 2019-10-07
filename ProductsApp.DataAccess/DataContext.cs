@@ -9,7 +9,7 @@ namespace ProductsApp.DataAccess
 {
     public class DataContext : DbContext
     {
-        private IDateService _dateService;
+        private readonly IDateService _dateService;
         public DataContext(DbContextOptions<DataContext> options, IDateService dateService)
             : base(options)
         {
