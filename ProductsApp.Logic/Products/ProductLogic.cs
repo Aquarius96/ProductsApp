@@ -12,8 +12,7 @@ namespace ProductsApp.Logic.Products
     {
         private readonly IProductRepository _repository;        
 
-        public ProductLogic(IProductRepository repository,
-            IDateService dateService)
+        public ProductLogic(IProductRepository repository)
         {
             _repository = repository;            
         }

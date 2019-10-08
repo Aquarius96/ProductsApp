@@ -1,3 +1,4 @@
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
@@ -6,11 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProductsApp.DataAccess;
-using ProductsApp.Logic.Interfaces;
-using ProductsApp.Logic.Products;
-using ProductsApp.Logic.Repositories;
-using ProductsApp.Logic.Services;
-using ProductsApp.Logic.Services.Interfaces;
+using ProductsApp.WebApi.Autofac;
 
 namespace ProductsApp.WebApi
 {
@@ -22,6 +19,7 @@ namespace ProductsApp.WebApi
         }
 
         public IConfiguration Configuration { get; }
+        public ILifetimeScope AutofacContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,9 +33,12 @@ namespace ProductsApp.WebApi
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.ConnectionString));
 
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductLogic, ProductLogic>();
-            services.AddScoped<IDateService, DateService>();
+            services.AddOptions();            
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
