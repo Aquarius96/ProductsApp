@@ -2,16 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ProductsApp.DataAccess;
-using ProductsApp.Logic.Interfaces;
 using ProductsApp.Logic.Repositories;
 using ProductsApp.Logic.Services;
-using ProductsApp.Logic.Services.Interfaces;
 using System.Data.SqlClient;
-using System.Linq;
 
-namespace ProductsApp.WebApi.Autofac
+namespace ProductsApp.WebApi.Autofac.Modules
 {
-    public class AutofacModule : Module
+    public class DataAccessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -33,14 +30,6 @@ namespace ProductsApp.WebApi.Autofac
 
             builder.RegisterAssemblyTypes(typeof(Repository<>).Assembly)
                 .AsClosedTypesOf(typeof(IRepository<>))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(typeof(ILogic).Assembly)
-                .Where(t => typeof(ILogic).IsAssignableFrom(t))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(typeof(IService).Assembly)
-                .Where(t => typeof(IService).IsAssignableFrom(t))
                 .AsImplementedInterfaces();
         }
     }

@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProductsApp.DataAccess;
 using ProductsApp.WebApi.Autofac;
+using ProductsApp.WebApi.Autofac.Modules;
+using System.Reflection;
 
 namespace ProductsApp.WebApi
 {
@@ -37,8 +39,8 @@ namespace ProductsApp.WebApi
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule(new AutofacModule());
+        {            
+            builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
