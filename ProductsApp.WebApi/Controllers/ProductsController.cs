@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProductsApp.Logic;
 using ProductsApp.Logic.Interfaces;
@@ -14,10 +14,13 @@ namespace ProductsApp.WebApi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductLogic _logic;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductLogic logic)
+        public ProductsController(IProductLogic logic,
+            IMapper mapper)
         {
             _logic = logic;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -25,12 +28,7 @@ namespace ProductsApp.WebApi.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> Create(ProductDto productDto)
         {
-            var product = new Product
-            {
-                Name = productDto.Name,
-                Description = productDto.Description,
-                Price = productDto.Price
-            };
+            var product = _mapper.Map<Product>(productDto);
             var result = await _logic.Create(product);
 
             if(!result.Success)
@@ -51,13 +49,7 @@ namespace ProductsApp.WebApi.Controllers
         public async Task<IActionResult> GetAllActive()
         {
             var result = await _logic.GetAllActive();
-            var productsToReturn = result.Value.Select(p => new ProductDto
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price                
-            });
+            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(result.Value);
             return Ok(productsToReturn);
         }
 
@@ -73,13 +65,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var productToReturn = new ProductDto
-            {
-                Id = result.Value.Id,
-                Name = result.Value.Name,
-                Description = result.Value.Description,
-                Price = result.Value.Price                
-            };
+            var productToReturn = _mapper.Map<ProductDto>(result.Value);
             return Ok(productToReturn);
         }
         
