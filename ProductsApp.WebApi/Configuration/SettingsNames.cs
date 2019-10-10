@@ -2,7 +2,6 @@
 {
     public static class SettingsNames
     {
-        public const string ConnectionString = "DefaultConnection";
-        public const string DataBasePassword = "databasePassword";
+        public const string ConnectionString = "DefaultConnection";        
     }
 }

@@ -28,7 +28,7 @@ namespace ProductsApp.WebApi
 
             var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString(SettingsNames.ConnectionString))
             {
-                Password = Configuration[SettingsNames.DataBasePassword]
+                Password = Configuration["databasePassword"]
             };
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.ConnectionString));
