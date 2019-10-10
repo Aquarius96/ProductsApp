@@ -1,6 +1,8 @@
 using Autofac;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +34,10 @@ namespace ProductsApp.WebApi
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.ConnectionString));
 
-            services.AddOptions();            
+            services.AddMvc()                
+                .AddFluentValidation();
+
+            services.AddOptions();    
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

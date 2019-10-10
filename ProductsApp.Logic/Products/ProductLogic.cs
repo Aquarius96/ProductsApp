@@ -10,18 +10,28 @@ namespace ProductsApp.Logic.Products
 {
     public class ProductLogic : IProductLogic
     {
-        private readonly IProductRepository _repository;        
+        private readonly IProductRepository _repository;
+        private readonly ICustomValidatorFactory _validatorFactory;
 
-        public ProductLogic(IProductRepository repository)
+        public ProductLogic(IProductRepository repository,
+            ICustomValidatorFactory validatorFactory)
         {
-            _repository = repository;            
+            _repository = repository;
+            _validatorFactory = validatorFactory;
         }
         public async Task<Result<Product>> Create(Product product)
         {
             if(product == null)
             {
                 throw new ArgumentNullException(nameof(product));
-            }            
+            }
+
+            var validator = _validatorFactory.Create<Product>();
+            var validationResult = await validator.ValidateAsync(product);
+            if (!validationResult.IsValid)
+            {
+                return Result.Error<Product>(validationResult.Errors);
+            }
 
             await _repository.Add(product);
             await _repository.SaveChanges();
@@ -64,7 +74,14 @@ namespace ProductsApp.Logic.Products
             if(product == null)
             {
                 throw new ArgumentNullException(nameof(product));
-            }            
+            }
+
+            var validator = _validatorFactory.Create<Product>();
+            var validationResult = await validator.ValidateAsync(product);
+            if (!validationResult.IsValid)
+            {
+                return Result.Error<Product>(validationResult.Errors);
+            }
 
             await _repository.SaveChanges();
             return Result.Ok(product);
