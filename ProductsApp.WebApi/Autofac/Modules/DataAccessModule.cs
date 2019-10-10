@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ProductsApp.DataAccess;
 using ProductsApp.Logic.Repositories;
 using ProductsApp.Logic.Services;
+using ProductsApp.WebApi.Configuration;
 using System.Data.SqlClient;
 
 namespace ProductsApp.WebApi.Autofac.Modules
@@ -17,16 +18,14 @@ namespace ProductsApp.WebApi.Autofac.Modules
                 var config = c.Resolve<IConfiguration>();
 
                 var opt = new DbContextOptionsBuilder<DataContext>();
-                var builder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"))
-                {
-                    Password = config["databasePassword"]
-                };
-                opt.UseSqlServer(builder.ConnectionString);
+                opt.UseSqlServer(config.GetConnectionString(SettingsNames.ConnectionString));                
 
-                var dateService = new DateService();
+                return opt.Options;
+            }).AsSelf().SingleInstance();
 
-                return new DataContext(opt.Options, dateService);
-            }).AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(typeof(Repository<>).Assembly)
                 .AsClosedTypesOf(typeof(IRepository<>))

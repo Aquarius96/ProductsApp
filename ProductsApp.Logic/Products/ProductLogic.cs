@@ -1,6 +1,5 @@
 ﻿using ProductsApp.Logic.Interfaces;
 using ProductsApp.Logic.Repositories;
-using ProductsApp.Logic.Services.Interfaces;
 using ProductsApp.Models;
 using System;
 using System.Collections.Generic;
