@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ProductsApp.DataAccess;
 using ProductsApp.Logic.Repositories;
 using ProductsApp.Logic.Services;
+using ProductsApp.WebApi.Configuration;
 using System.Data.SqlClient;
 
 namespace ProductsApp.WebApi.Autofac.Modules
@@ -17,7 +18,7 @@ namespace ProductsApp.WebApi.Autofac.Modules
                 var config = c.Resolve<IConfiguration>();
 
                 var opt = new DbContextOptionsBuilder<DataContext>();
-                var builder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"))
+                var builder = new SqlConnectionStringBuilder(config.GetConnectionString(SettingsNames.ConnectionString))
                 {
                     Password = config["databasePassword"]
                 };
