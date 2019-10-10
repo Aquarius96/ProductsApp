@@ -18,16 +18,14 @@ namespace ProductsApp.WebApi.Autofac.Modules
                 var config = c.Resolve<IConfiguration>();
 
                 var opt = new DbContextOptionsBuilder<DataContext>();
-                var builder = new SqlConnectionStringBuilder(config.GetConnectionString(SettingsNames.ConnectionString))
-                {
-                    Password = config[SettingsNames.DataBasePassword]
-                };
-                opt.UseSqlServer(builder.ConnectionString);
+                opt.UseSqlServer(config.GetConnectionString(SettingsNames.ConnectionString));                
 
-                var dateService = new DateService();
+                return opt.Options;
+            }).AsSelf().SingleInstance();
 
-                return new DataContext(opt.Options, dateService);
-            }).AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(typeof(Repository<>).Assembly)
                 .AsClosedTypesOf(typeof(IRepository<>))

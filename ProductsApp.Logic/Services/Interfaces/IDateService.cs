@@ -2,7 +2,7 @@
 
 namespace ProductsApp.Logic.Services.Interfaces
 {
-    public interface IDateService
+    public interface IDateService : IService
     {
         DateTime Now { get; }
         DateTime UtcNow { get; }
