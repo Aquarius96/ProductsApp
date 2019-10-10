@@ -16,12 +16,6 @@ namespace ProductsApp.WebApi.Infrastructure
         {
             IValidator<T> validator = _context.Resolve<IValidator<T>>();
             return validator;
-        }
-
-        public IValidator<T> Create<T, TValidator>() where TValidator : class, IValidator<T>
-        {
-            TValidator instance = _context.Resolve<TValidator>();
-            return instance;
-        }
+        }        
     }
 }

@@ -7,7 +7,9 @@ namespace ProductsApp.Logic.Validators
     {
         public ProductValidator()
         {
-            RuleFor(p => p.Name).NotEmpty().Length(3, 50);
+            RuleFor(p => p.Name)
+                .NotEmpty()
+                .Length(3, 50);
         }
     }
 }

@@ -33,10 +33,7 @@ namespace ProductsApp.WebApi
                 Password = Configuration["databasePassword"]
             };
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(builder.ConnectionString));
-
-            services.AddMvc()                
-                .AddFluentValidation();
+                options.UseSqlServer(builder.ConnectionString));            
 
             services.AddOptions();    
         }
