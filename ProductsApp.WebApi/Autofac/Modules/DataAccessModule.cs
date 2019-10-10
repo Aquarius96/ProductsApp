@@ -20,7 +20,7 @@ namespace ProductsApp.WebApi.Autofac.Modules
                 var opt = new DbContextOptionsBuilder<DataContext>();
                 var builder = new SqlConnectionStringBuilder(config.GetConnectionString(SettingsNames.ConnectionString))
                 {
-                    Password = config["databasePassword"]
+                    Password = config[SettingsNames.DataBasePassword]
                 };
                 opt.UseSqlServer(builder.ConnectionString);
 
