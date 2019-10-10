@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProductsApp.DataAccess;
+using ProductsApp.WebApi.Configuration;
 
 namespace ProductsApp.WebApi
 {
@@ -25,7 +26,7 @@ namespace ProductsApp.WebApi
         {
             services.AddControllers();
 
-            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection"))
+            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString(SettingsNames.ConnectionString))
             {
                 Password = Configuration["databasePassword"]
             };
