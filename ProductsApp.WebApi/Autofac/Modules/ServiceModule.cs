@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using ProductsApp.Logic.Services.Interfaces;
+using ProductsApp.WebApi.Infrastructure;
 
 namespace ProductsApp.WebApi.Autofac.Modules
 {
@@ -10,6 +11,10 @@ namespace ProductsApp.WebApi.Autofac.Modules
             builder.RegisterAssemblyTypes(typeof(IService).Assembly)
                 .Where(t => typeof(IService).IsAssignableFrom(t))
                 .AsImplementedInterfaces();
+
+            builder.RegisterAssemblyTypes(typeof(ServiceModule).Assembly)
+                .Where(t => typeof(IService).IsAssignableFrom(t))
+                .AsImplementedInterfaces();            
         }
     }
 }
