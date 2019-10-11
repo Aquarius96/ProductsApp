@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ProductsApp.DataAccess;
 using ProductsApp.Logic.Repositories;
-using ProductsApp.Logic.Services;
 using ProductsApp.WebApi.Configuration;
-using System.Data.SqlClient;
 
 namespace ProductsApp.WebApi.Autofac.Modules
 {
