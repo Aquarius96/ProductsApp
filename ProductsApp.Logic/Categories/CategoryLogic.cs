@@ -51,7 +51,7 @@ namespace ProductsApp.Logic.Categories
 
             if(category == null)
             {
-                return Result.Error<Category>($"There is no category with id: {id}");
+                return Result.Error<Category>($"There is no Category with id: {id}");
             }
             return Result.Ok(category);
         }
