@@ -12,8 +12,8 @@ namespace ProductsApp.WebApi.Autofac.Modules
                 .Where(t => typeof(IService).IsAssignableFrom(t))
                 .AsImplementedInterfaces();
 
-            builder.RegisterAssemblyTypes(typeof(CustomValidatorFactory).Assembly)
-                .Where(t => typeof(ICustomValidatorFactory).IsAssignableFrom(t))
+            builder.RegisterAssemblyTypes(typeof(ServiceModule).Assembly)
+                .Where(t => typeof(IService).IsAssignableFrom(t))
                 .AsImplementedInterfaces();            
         }
     }
