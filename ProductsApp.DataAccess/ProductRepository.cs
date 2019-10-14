@@ -1,5 +1,9 @@
-﻿using ProductsApp.Logic.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductsApp.Logic.Repositories;
 using ProductsApp.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProductsApp.DataAccess
 {
@@ -7,6 +11,19 @@ namespace ProductsApp.DataAccess
     {
         public ProductRepository(DataContext db)
             :base(db)
-        { }        
+        { }
+
+        public new async Task<IEnumerable<Product>> GetAllActive()
+        {
+            return await _db.Products.Where(m => m.IsActive)
+                .Include(m => m.Category)
+                .ToListAsync();
+        }
+
+        public new async Task<Product> GetById(int id)
+        {
+            return await _db.Products.Include(m => m.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+        }
     }
 }
