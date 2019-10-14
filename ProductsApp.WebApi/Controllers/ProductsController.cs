@@ -24,9 +24,9 @@ namespace ProductsApp.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(ProductDto))]
+        [ProducesResponseType(201, Type = typeof(ProductForCreationDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Create(ProductDto productDto)
+        public async Task<IActionResult> Create(ProductForCreationDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             var result = await _logic.Create(product);
@@ -37,7 +37,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            productDto.Id = result.Value.Id;            
+            productDto.Id = result.Value.Id;  
 
             return CreatedAtAction(nameof(Create), productDto);
         }

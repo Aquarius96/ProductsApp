@@ -8,8 +8,10 @@ namespace ProductsApp.WebApi.Mappers
     {
         public ProductProfile()
         {
-            CreateMap<ProductDto, Product>()
-                .ReverseMap();
+            CreateMap<ProductForCreationDto, Product>();
+            CreateMap<Product, ProductDto>()                
+                .ForMember(m => m.CategoryName, 
+                    opt => opt.MapFrom(p => p.Category.Name));
         }
     }
 }
