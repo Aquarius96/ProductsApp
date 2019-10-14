@@ -23,7 +23,7 @@ namespace ProductsApp.DataAccess
 
         public void Delete(T model)
         {
-            _db.Set<T>().Remove(model);
+            model.IsActive = false;
         }
 
         public async Task<IEnumerable<T>> GetAllActive()
