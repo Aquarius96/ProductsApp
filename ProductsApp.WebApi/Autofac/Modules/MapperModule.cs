@@ -30,6 +30,10 @@ namespace ProductsApp.WebApi.Autofac.Modules
             builder.RegisterAssemblyTypes(typeof(MapperModule).Assembly)
                 .AsClosedTypesOf(typeof(ITypeConverter<,>))
                 .AsSelf();
+
+            builder.RegisterAssemblyTypes(typeof(MapperModule).Assembly)
+                .AsClosedTypesOf(typeof(IValueResolver<,,>))
+                .AsSelf();
         }
     }
 }

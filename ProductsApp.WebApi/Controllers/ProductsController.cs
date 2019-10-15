@@ -92,7 +92,7 @@ namespace ProductsApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(ProductDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Update(int id, ProductDto productDto)
+        public async Task<IActionResult> Update(int id, ProductForCreationDto productDto)
         {
             if(id != productDto.Id)
             {
@@ -110,6 +110,7 @@ namespace ProductsApp.WebApi.Controllers
             productResult.Value.Name = productDto.Name;
             productResult.Value.Description = productDto.Description;
             productResult.Value.Price = productDto.Price;
+            productResult.Value.CategoryId = productDto.CategoryId;
 
             var result = await _logic.Update(productResult.Value);
 
@@ -119,7 +120,9 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(productDto);
+            var productToReturn = _mapper.Map<ProductDto>(productDto);
+
+            return Ok(productToReturn);
         }
     }
 }
