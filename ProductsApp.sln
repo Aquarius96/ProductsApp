@@ -5,11 +5,15 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsApp.WebApi", "ProductsApp.WebApi\ProductsApp.WebApi.csproj", "{9D70A661-06E1-423B-813C-67B853C47790}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApp.Models", "ProductsApp.Models\ProductsApp.Models.csproj", "{AD56A0B6-4F99-4847-B10B-1831F12B2274}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsApp.Models", "ProductsApp.Models\ProductsApp.Models.csproj", "{AD56A0B6-4F99-4847-B10B-1831F12B2274}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApp.DataAccess", "ProductsApp.DataAccess\ProductsApp.DataAccess.csproj", "{3F9A88D6-D1B2-42FA-A91A-EE06A9E952A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsApp.DataAccess", "ProductsApp.DataAccess\ProductsApp.DataAccess.csproj", "{3F9A88D6-D1B2-42FA-A91A-EE06A9E952A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApp.Logic", "ProductsApp.Logic\ProductsApp.Logic.csproj", "{C4696565-BAAD-4F46-8DCD-B88E89E6F8DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsApp.Logic", "ProductsApp.Logic\ProductsApp.Logic.csproj", "{C4696565-BAAD-4F46-8DCD-B88E89E6F8DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{88659AEE-7A42-45DE-B044-B0DD12999001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApp.Logic.Tests", "ProductsApp.Logic.Tests\ProductsApp.Logic.Tests.csproj", "{E65B880F-6444-4C87-8BB3-5378BD5608FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{C4696565-BAAD-4F46-8DCD-B88E89E6F8DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4696565-BAAD-4F46-8DCD-B88E89E6F8DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4696565-BAAD-4F46-8DCD-B88E89E6F8DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E65B880F-6444-4C87-8BB3-5378BD5608FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E65B880F-6444-4C87-8BB3-5378BD5608FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E65B880F-6444-4C87-8BB3-5378BD5608FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E65B880F-6444-4C87-8BB3-5378BD5608FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E65B880F-6444-4C87-8BB3-5378BD5608FA} = {88659AEE-7A42-45DE-B044-B0DD12999001}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA900F6C-5706-4BD7-9B8C-D693F4C3E973}
