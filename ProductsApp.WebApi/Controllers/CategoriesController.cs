@@ -37,7 +37,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            categoryDto.Id = result.Value.Id;
+            _mapper.Map(result.Value, categoryDto);
 
             return CreatedAtAction(nameof(Create), categoryDto);
         }
@@ -106,7 +106,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            categoryResult.Value.Name = categoryDto.Name;
+            _mapper.Map(categoryDto, categoryResult.Value);
 
             var result = await _logic.Update(categoryResult.Value);
 
