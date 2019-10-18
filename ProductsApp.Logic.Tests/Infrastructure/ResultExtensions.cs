@@ -72,7 +72,7 @@ namespace ProductsApp.Logic
 
                 Execute.Assertion
                     .BecauseOf(because, becauseArgs)
-                    .ForCondition(Subject.Value != null)
+                    .ForCondition(Subject.Value == null)
                     .FailWith("The Value should be null");
 
                 Execute.Assertion
