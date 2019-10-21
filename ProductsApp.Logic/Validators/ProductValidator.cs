@@ -10,6 +10,14 @@ namespace ProductsApp.Logic.Validators
             RuleFor(p => p.Name)
                 .NotEmpty()
                 .Length(3, 50);
+
+            RuleFor(p => p.Description)
+                .NotEmpty()
+                .Length(3, 250);
+
+            RuleFor(p => p.Price)
+                .NotEmpty()
+                .GreaterThanOrEqualTo(0);
         }
     }
 }
