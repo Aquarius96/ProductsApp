@@ -32,8 +32,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             Category = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Remove(Category));
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
             Repository.Verify(r => r.Delete(It.IsAny<Category>()), Times.Never);
+            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -45,8 +45,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             var result = await logic.Remove(Category);
             //Arrange
             result.Should().BeSuccess(Category);
-            Repository.Verify(r => r.SaveChanges(), Times.Once);
             Repository.Verify(r => r.Delete(Category), Times.Once);
+            Repository.Verify(r => r.SaveChanges(), Times.Once);
         }
     }
 }

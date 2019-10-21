@@ -37,15 +37,15 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Update(Product));
             ValidatorFactory.Verify(v => v.Create<Product>(), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
             ProductValidator.Verify(v => v.ValidateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Never);
+            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
         public async Task Return_Errors_When_Validation_Fails()
         {
             //Arrange
-            var warning = "You cannot update Product";
+            const string warning = "You cannot update Product";
             var logic = Create();
             await ProductValidator.SetValidatorFailure(warning);
             //Act

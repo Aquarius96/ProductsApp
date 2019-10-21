@@ -30,8 +30,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
         {
             //Arrange
             var logic = Create();
+            Category = null;
             Repository.Setup(r => r.GetById(It.IsAny<int>()))
-                .ReturnsAsync((Category)null);
+                .ReturnsAsync(Category);
             //Act
             var result = await logic.GetById(10);
             //Assert

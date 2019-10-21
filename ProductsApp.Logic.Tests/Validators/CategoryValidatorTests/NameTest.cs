@@ -1,5 +1,4 @@
-﻿using FizzWare.NBuilder;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using ProductsApp.Logic.Validators;
 using Xunit;
 

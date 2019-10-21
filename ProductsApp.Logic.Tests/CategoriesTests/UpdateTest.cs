@@ -37,24 +37,24 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Update(Category));
             ValidatorFactory.Verify(v => v.Create<Category>(), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
             CategoryValidator.Verify(v => v.ValidateAsync(It.IsAny<Category>(), It.IsAny<CancellationToken>()), Times.Never);
+            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
         public async Task Return_Errors_When_Validation_Fails()
         {
             //Arrange
-            var warning = "You cannot update Category";
+            const string warning = "You cannot update Category";
             var logic = Create();
             await CategoryValidator.SetValidatorFailure(warning);
             //Act
             var result = await logic.Update(Category);
             //Assert
             result.Should().BeFailure(warning);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
-            CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once());
             ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once());
+            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -66,9 +66,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             var result = await logic.Update(Category);
             //Assert
             result.Should().BeSuccess(Category);
-            Repository.Verify(r => r.SaveChanges(), Times.Once);
-            CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once);
             ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once);
+            Repository.Verify(r => r.SaveChanges(), Times.Once);
         }
     }
 }
