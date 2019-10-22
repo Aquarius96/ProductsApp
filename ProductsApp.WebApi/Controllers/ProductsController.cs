@@ -26,7 +26,7 @@ namespace ProductsApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(ProductDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Create(ProductForCreationDto productDto)
+        public async Task<IActionResult> Create(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             var result = await _logic.Create(product);
@@ -37,9 +37,9 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var productToReturn = _mapper.Map<ProductDto>(productDto);
+            _mapper.Map(result.Value, productDto);
 
-            return CreatedAtAction(nameof(Create), productToReturn);
+            return CreatedAtAction(nameof(Create), productDto);
         }
 
         
@@ -92,7 +92,7 @@ namespace ProductsApp.WebApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(ProductDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Update(int id, ProductForCreationDto productDto)
+        public async Task<IActionResult> Update(int id, ProductDto productDto)
         {
             if(id != productDto.Id)
             {
@@ -117,9 +117,7 @@ namespace ProductsApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var productToReturn = _mapper.Map<ProductDto>(productDto);
-
-            return Ok(productToReturn);
+            return Ok(productDto);
         }
     }
 }
