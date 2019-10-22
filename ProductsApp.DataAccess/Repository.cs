@@ -16,28 +16,28 @@ namespace ProductsApp.DataAccess
             _db = db;            
         }
 
-        public async Task Add(T model)
+        public virtual async Task Add(T model)
         {            
             await _db.Set<T>().AddAsync(model);
         }
 
-        public void Delete(T model)
+        public virtual void Delete(T model)
         {
             model.IsActive = false;
         }
 
-        public async Task<IEnumerable<T>> GetAllActive()
+        public virtual async Task<IEnumerable<T>> GetAllActive()
         {
             return await _db.Set<T>().Where(m => m.IsActive)
                 .ToListAsync();
         }
 
-        public async Task<T> GetById(int id)
+        public virtual async Task<T> GetById(int id)
         {
             return await _db.Set<T>().FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task SaveChanges()
+        public virtual async Task SaveChanges()
         {
             await _db.SaveChangesAsync();
         }
