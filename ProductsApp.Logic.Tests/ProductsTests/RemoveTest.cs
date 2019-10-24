@@ -43,6 +43,7 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Remove(Product);
             //Assert
+            result.Should().BeSuccess(Product);
             Repository.Verify(r => r.Delete(Product), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
         }

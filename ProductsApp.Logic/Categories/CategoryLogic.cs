@@ -56,7 +56,7 @@ namespace ProductsApp.Logic.Categories
             return Result.Ok(category);
         }
 
-        public async Task<Result> Remove(Category category)
+        public async Task<Result<Category>> Remove(Category category)
         {
             if(category == null)
             {
@@ -65,7 +65,7 @@ namespace ProductsApp.Logic.Categories
 
             _repository.Delete(category);
             await _repository.SaveChanges();
-            return Result.Ok();
+            return Result.Ok(category);
         }
 
         public async Task<Result<Category>> Update(Category category)

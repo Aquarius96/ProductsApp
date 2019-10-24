@@ -44,7 +44,7 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.Remove(Category);
             //Arrange
-            result.Should().BeSuccess();
+            result.Should().BeSuccess(Category);
             Repository.Verify(r => r.Delete(Category), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
         }

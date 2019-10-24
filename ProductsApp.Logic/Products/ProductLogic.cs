@@ -57,7 +57,7 @@ namespace ProductsApp.Logic.Products
             return Result.Ok(product);
         }
 
-        public async Task<Result> Remove(Product product)
+        public async Task<Result<Product>> Remove(Product product)
         {
             if(product == null)
             {
@@ -66,7 +66,7 @@ namespace ProductsApp.Logic.Products
 
             _repository.Delete(product);
             await _repository.SaveChanges();
-            return Result.Ok();
+            return Result.Ok(product);
         }
 
         public async Task<Result<Product>> Update(Product product)
