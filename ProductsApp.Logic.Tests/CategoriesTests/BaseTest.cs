@@ -19,6 +19,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             ValidatorFactory = new Mock<ICustomValidatorFactory>();
             CategoryValidator = new Mock<IValidator<Category>>();
 
+            ValidatorFactory.Setup(v => v.Create<Category>())
+                .Returns(CategoryValidator.Object);
+
             return new CategoryLogic(Repository.Object, 
                 ValidatorFactory.Object);
         }

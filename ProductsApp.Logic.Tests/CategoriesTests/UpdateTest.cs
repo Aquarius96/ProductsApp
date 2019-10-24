@@ -24,8 +24,6 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
         {
             Category = Builder<Category>.CreateNew().Build();
             await CategoryValidator.SetValidatorSuccess();
-            ValidatorFactory.Setup(v => v.Create<Category>())
-                .Returns(CategoryValidator.Object);
         }
 
         [Fact]
@@ -36,9 +34,6 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             Category = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Update(Category));
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Never);
-            CategoryValidator.Verify(v => v.ValidateAsync(It.IsAny<Category>(), It.IsAny<CancellationToken>()), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -51,8 +46,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.Update(Category);
             //Assert
-            result.Should().BeFailure(warning);
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            result.Should()
+                .BeFailure(warning);
             CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once());
             Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
@@ -65,8 +60,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.Update(Category);
             //Assert
-            result.Should().BeSuccess(Category);
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            result.Should()
+                .BeSuccess(Category);
             CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
         }

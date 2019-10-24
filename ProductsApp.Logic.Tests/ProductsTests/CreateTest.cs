@@ -22,10 +22,9 @@ namespace ProductsApp.Logic.Tests.ProductsTests
 
         private async Task CorrectFlow()
         {
-            Product = Builder<Product>.CreateNew().Build();
-
-            ValidatorFactory.Setup(v => v.Create<Product>())
-                .Returns(ProductValidator.Object);
+            Product = Builder<Product>
+                .CreateNew()
+                .Build();
             await ProductValidator.SetValidatorSuccess();
         }
 
@@ -37,8 +36,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Create(Product);
             //Assert
-            result.Should().BeSuccess(Product);
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Once);
+            result.Should()
+                .BeSuccess(Product);
             ProductValidator.Verify(v => v.ValidateAsync(Product, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.Add(Product), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
@@ -52,10 +51,6 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             Product = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Create(Product));
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Never);
-            ProductValidator.Verify(v => v.ValidateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Never);
-            Repository.Verify(r => r.Add(It.IsAny<Product>()), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -68,8 +63,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Create(Product);
             //Assert
-            result.Should().BeFailure(warning);
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Once);
+            result.Should()
+                .BeFailure(warning);
             ProductValidator.Verify(v => v.ValidateAsync(Product, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.Add(It.IsAny<Product>()), Times.Never);
             Repository.Verify(r => r.SaveChanges(), Times.Never);

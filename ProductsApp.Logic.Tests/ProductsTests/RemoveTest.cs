@@ -31,8 +31,6 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             Product = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Remove(Product));
-            Repository.Verify(r => r.Delete(It.IsAny<Product>()), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -43,7 +41,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Remove(Product);
             //Assert
-            result.Should().BeSuccess(Product);
+            result.Should()
+                .BeSuccess(Product);
             Repository.Verify(r => r.Delete(Product), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
         }

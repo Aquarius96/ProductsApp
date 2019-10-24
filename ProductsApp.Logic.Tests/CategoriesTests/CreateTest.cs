@@ -22,10 +22,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
 
         private async Task CorrectFlow()
         {
-            Category = Builder<Category>.CreateNew().Build();
-
-            ValidatorFactory.Setup(v => v.Create<Category>())
-                .Returns(CategoryValidator.Object);
+            Category = Builder<Category>
+                .CreateNew()
+                .Build();
             await CategoryValidator.SetValidatorSuccess();
         }
 
@@ -37,8 +36,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.Create(Category);
             //Assert
-            result.Should().BeSuccess(Category);
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            result.Should()
+                .BeSuccess(Category);
             CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.Add(Category), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
@@ -52,10 +51,6 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             Category = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Create(Category));
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Never);
-            CategoryValidator.Verify(v => v.ValidateAsync(It.IsAny<Category>(), It.IsAny<CancellationToken>()), Times.Never);
-            Repository.Verify(r => r.Add(It.IsAny<Category>()), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never());
         }
 
         [Fact]
@@ -68,8 +63,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.Create(Category);
             //Assert
-            result.Should().BeFailure(warning);
-            ValidatorFactory.Verify(v => v.Create<Category>(), Times.Once);
+            result.Should()
+                .BeFailure(warning);
             CategoryValidator.Verify(v => v.ValidateAsync(Category, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.Add(It.IsAny<Category>()), Times.Never);
             Repository.Verify(r => r.SaveChanges(), Times.Never);

@@ -24,8 +24,6 @@ namespace ProductsApp.Logic.Tests.ProductsTests
         {
             Product = Builder<Product>.CreateNew().Build();
             await ProductValidator.SetValidatorSuccess();
-            ValidatorFactory.Setup(v => v.Create<Product>())
-                .Returns(ProductValidator.Object);
         }
 
         [Fact]
@@ -36,9 +34,6 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             Product = null;
             //Act Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => logic.Update(Product));
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Never);
-            ProductValidator.Verify(v => v.ValidateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Never);
-            Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -51,7 +46,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Update(Product);
             //Assert
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Once);
+            result.Should()
+                .BeFailure(warning);
             ProductValidator.Verify(v => v.ValidateAsync(Product, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Never);
         }
@@ -64,7 +60,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.Update(Product);
             //Assert
-            ValidatorFactory.Verify(v => v.Create<Product>(), Times.Once);
+            result.Should()
+                .BeSuccess(Product);
             ProductValidator.Verify(v => v.ValidateAsync(Product, It.IsAny<CancellationToken>()), Times.Once);
             Repository.Verify(r => r.SaveChanges(), Times.Once);
         }

@@ -34,7 +34,7 @@ namespace ProductsApp.DataAccess
 
         public virtual async Task<T> GetById(int id)
         {
-            return await _db.Set<T>().FirstOrDefaultAsync(m => m.Id == id && m.IsActive);
+            return await _db.Set<T>().FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public virtual async Task SaveChanges()

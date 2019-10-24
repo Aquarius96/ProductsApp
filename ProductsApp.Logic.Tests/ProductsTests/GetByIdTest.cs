@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using FizzWare.NBuilder;
-using FluentAssertions;
 using Moq;
 using ProductsApp.Logic.Products;
 using ProductsApp.Models;
@@ -31,12 +30,14 @@ namespace ProductsApp.Logic.Tests.ProductsTests
         {
             //Arrange
             var logic = Create();
+            Product = null;
             Repository.Setup(r => r.GetById(It.IsAny<int>()))
-                .ReturnsAsync((Product) null);
+                .ReturnsAsync(Product);
             //Act
             var result = await logic.GetById(10);
             //Assert
-            result.Should().BeFailure("There is no Product with id: 10");
+            result.Should()
+                .BeFailure("There is no Product with id: 10");
             Repository.Verify(r => r.GetById(10), Times.Once);
         }
 
@@ -48,7 +49,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.GetById(10);
             //Assert
-            result.Should().BeSuccess(Product);
+            result.Should()
+                .BeSuccess(Product);
             Repository.Verify(r => r.GetById(10), Times.Once);
         }
     }

@@ -19,6 +19,9 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             ValidatorFactory = new Mock<ICustomValidatorFactory>();
             ProductValidator = new Mock<IValidator<Product>>();
 
+            ValidatorFactory.Setup(v => v.Create<Product>())
+                .Returns(ProductValidator.Object);
+
             return new ProductLogic(Repository.Object,
                 ValidatorFactory.Object);
         }

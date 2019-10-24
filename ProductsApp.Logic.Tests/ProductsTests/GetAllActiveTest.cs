@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
-using FluentAssertions;
 using Moq;
 using ProductsApp.Logic.Products;
 using ProductsApp.Models;
@@ -24,7 +22,9 @@ namespace ProductsApp.Logic.Tests.ProductsTests
 
         private void CorrectFlow()
         {
-            Products = Builder<Product>.CreateListOfSize(10).Build();
+            Products = Builder<Product>
+                .CreateListOfSize(10)
+                .Build();
             ProductsResult = Result.Ok(Products);
             Repository.Setup(r => r.GetAllActive())
                 .ReturnsAsync(Products);
@@ -38,7 +38,8 @@ namespace ProductsApp.Logic.Tests.ProductsTests
             //Act
             var result = await logic.GetAllActive();
             //
-            result.Should().BeSuccess(ProductsResult.Value);
+            result.Should()
+                .BeSuccess(ProductsResult.Value);
             Repository.Verify(r => r.GetAllActive(), Times.Once);
         }
     }

@@ -20,7 +20,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
 
         private void CorrectFlow()
         {
-            Category = Builder<Category>.CreateNew().Build();
+            Category = Builder<Category>
+                .CreateNew()
+                .Build();
             Repository.Setup(r => r.GetById(It.IsAny<int>()))
                 .ReturnsAsync(Category);
         }
@@ -36,7 +38,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.GetById(10);
             //Assert
-            result.Should().BeFailure("There is no Category with id: 10");
+            result.Should()
+                .BeFailure("There is no Category with id: 10");
             Repository.Verify(r => r.GetById(10), Times.Once);
         }
 
@@ -48,7 +51,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.GetById(2);
             //Assert
-            result.Should().BeSuccess(Category);
+            result.Should()
+                .BeSuccess(Category);
             Repository.Verify(r => r.GetById(2), Times.Once);
         }
     }

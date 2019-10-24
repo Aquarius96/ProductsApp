@@ -22,7 +22,9 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
 
         private void CorrectFlow()
         {
-            Categories = Builder<Category>.CreateListOfSize(10).Build();
+            Categories = Builder<Category>
+                .CreateListOfSize(10)
+                .Build();
             CategoriesResult = Result.Ok(Categories);
             Repository.Setup(r => r.GetAllActive())
                 .ReturnsAsync(Categories);
@@ -36,7 +38,8 @@ namespace ProductsApp.Logic.Tests.CategoriesTests
             //Act
             var result = await logic.GetAllActive();
             //Assert
-            result.Should().BeSuccess(CategoriesResult.Value);
+            result.Should()
+                .BeSuccess(CategoriesResult.Value);
             Repository.Verify(r => r.GetAllActive(), Times.Once);
         } 
     }
