@@ -10,7 +10,7 @@ namespace ProductsApp.Logic.Interfaces
         Task<Result<Category>> Create(Category category);
         Task<Result<Category>> GetById(int id);
         Task<Result<IEnumerable<Category>>> GetAllActive();
-        Task<Result<Category>> Remove(Category category);
+        Task<Result> Remove(Category category);
         Task<Result<Category>> Update(Category category);
     }
 }

@@ -26,6 +26,22 @@ namespace ProductsApp.Logic
             };
         }
 
+        public static Result Error(string message)
+        {
+            return new Result()
+            {
+                Success = false,
+                Errors = new List<ErrorMessage>()
+                {
+                    new ErrorMessage()
+                    {
+                        PropertyName = string.Empty,
+                        Message = message
+                    }
+                }
+            };
+        }
+
         public static Result<T> Error<T>(string message)
         {
             return new Result<T>
