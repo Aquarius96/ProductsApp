@@ -32,10 +32,11 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
             CategoryDto = Builder<CategoryDto>
                 .CreateNew()
                 .Build();
-            Mapper.Setup(m => m.Map<Category>(It.IsAny<CategoryDto>()))
-                .Returns(Category);
             OkCategoryResult = Result.Ok(Category);
             ErrorCategoryResult = Result.Error<Category>("Error");
+
+            Mapper.Setup(m => m.Map<Category>(It.IsAny<CategoryDto>()))
+                .Returns(Category);
             Logic.Setup(l => l.Create(It.IsAny<Category>()))
                 .ReturnsAsync(OkCategoryResult);
         }

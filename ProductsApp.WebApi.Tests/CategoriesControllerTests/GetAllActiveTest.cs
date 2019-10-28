@@ -29,10 +29,10 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
             Categories = Builder<Category>
                 .CreateListOfSize(10)
                 .Build();
-            CategoriesResult = Result.Ok(Categories);
             CategoriesDto = Builder<CategoryDto>
                 .CreateListOfSize(10)
                 .Build();
+            CategoriesResult = Result.Ok(Categories);
 
             Mapper.Setup(m => m.Map<IEnumerable<CategoryDto>>(It.IsAny<List<Category>>()))
                 .Returns(CategoriesDto);

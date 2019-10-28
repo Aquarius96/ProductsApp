@@ -33,6 +33,7 @@ namespace ProductsApp.WebApi.Tests.ProductsControllerTests
             ErrorProductResult = Result.Error<Product>("Error");
             OkResult = Result.Ok();
             ErrorResult = Result.Error("Error");
+
             Logic.Setup(l => l.GetById(It.IsAny<int>()))
                 .ReturnsAsync(OkProductResult);
             Logic.Setup(l => l.Remove(Product))

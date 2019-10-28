@@ -12,7 +12,6 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
     public class DeleteTest : BaseTest
     {
         protected Category Category { get; set; }
-        protected int CategoryId { get; set; }
         protected Result OkResult { get; set; }
         protected Result<Category> OkCategoryResult { get; set; }
         protected Result ErrorResult { get; set; }
@@ -31,9 +30,10 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
                 .CreateNew()
                 .Build();
             OkCategoryResult = Result.Ok(Category);
+            ErrorCategoryResult = Result.Error<Category>("Error");
             OkResult = Result.Ok();
             ErrorResult = Result.Error("Error");
-            ErrorCategoryResult = Result.Error<Category>("Error");
+            
             Logic.Setup(l => l.GetById(It.IsAny<int>()))
                 .ReturnsAsync(() => OkCategoryResult);
             Logic.Setup(l => l.Remove(It.IsAny<Category>()))
@@ -48,11 +48,11 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
             Logic.Setup(l => l.GetById(It.IsAny<int>()))
                 .ReturnsAsync(ErrorCategoryResult);
             //Act
-            var result = await controller.Delete(CategoryId);
+            var result = await controller.Delete(10);
             //Assert
             result.Should()
                 .BeOfType<BadRequestObjectResult>();
-            Logic.Verify(l => l.GetById(CategoryId), Times.Once);
+            Logic.Verify(l => l.GetById(10), Times.Once);
             Logic.Verify(l => l.Remove(Category), Times.Never);
         }
 
@@ -64,11 +64,11 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
             Logic.Setup(l => l.Remove(It.IsAny<Category>()))
                 .ReturnsAsync(ErrorResult);
             //Act
-            var result = await controller.Delete(CategoryId);
+            var result = await controller.Delete(10);
             //Assert
             result.Should()
                 .BeOfType<BadRequestObjectResult>();
-            Logic.Verify(l => l.GetById(CategoryId), Times.Once);
+            Logic.Verify(l => l.GetById(10), Times.Once);
             Logic.Verify(l => l.Remove(Category), Times.Once);
         }
 
@@ -78,11 +78,11 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
             //Arrange
             var controller = Create();
             //Act
-            var result = await controller.Delete(CategoryId);
+            var result = await controller.Delete(10);
             //Assert
             result.Should()
                 .BeOfType<NoContentResult>();
-            Logic.Verify(l => l.GetById(CategoryId), Times.Once);
+            Logic.Verify(l => l.GetById(10), Times.Once);
             Logic.Verify(l => l.Remove(Category), Times.Once);
         }
     }

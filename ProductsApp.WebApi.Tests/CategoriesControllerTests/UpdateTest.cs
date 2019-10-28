@@ -36,10 +36,11 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
                 .CreateNew()
                 .With(c => c.Id = CategoryId)
                 .Build();
-            Mapper.Setup(m => m.Map<Category>(It.IsAny<CategoryDto>()))
-                .Returns(Category);
             OkCategoryResult = Result.Ok(Category);
             ErrorCategoryResult = Result.Error<Category>("Error");
+
+            Mapper.Setup(m => m.Map<Category>(It.IsAny<CategoryDto>()))
+                .Returns(Category);
             Logic.Setup(l => l.GetById(It.IsAny<int>()))
                 .ReturnsAsync(OkCategoryResult);
             Logic.Setup(l => l.Update(It.IsAny<Category>()))
@@ -51,8 +52,9 @@ namespace ProductsApp.WebApi.Tests.CategoriesControllerTests
         {
             //Arrange
             var controller = Create();
+            CategoryId++;
             //Act
-            var result = await controller.Update(9, CategoryDto);
+            var result = await controller.Update(CategoryId, CategoryDto);
             //Assert
             result.Should()
                 .BeOfType<BadRequestResult>();

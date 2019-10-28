@@ -34,6 +34,7 @@ namespace ProductsApp.WebApi.Tests.ProductsControllerTests
                 .Build();
             OkProductResult = Result.Ok(Product);
             ErrorProductResult = Result.Error<Product>("Error");
+
             Mapper.Setup(m => m.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(ProductDto);
             Logic.Setup(m => m.GetById(It.IsAny<int>()))

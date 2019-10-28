@@ -30,6 +30,7 @@ namespace ProductsApp.WebApi.Tests.ProductsControllerTests
                 .CreateListOfSize(10)
                 .Build();
             ProductsResult = Result.Ok(Products);
+
             Mapper.Setup(m => m.Map<IEnumerable<ProductDto>>(Products))
                 .Returns(ProductsDto);
             Logic.Setup(l => l.GetAllActive())
