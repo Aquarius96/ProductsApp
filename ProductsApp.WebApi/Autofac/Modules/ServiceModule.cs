@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using ProductsApp.DataAccess;
 using ProductsApp.Logic.Services.Interfaces;
-using ProductsApp.WebApi.Infrastructure;
 
 namespace ProductsApp.WebApi.Autofac.Modules
 {
@@ -14,7 +14,10 @@ namespace ProductsApp.WebApi.Autofac.Modules
 
             builder.RegisterAssemblyTypes(typeof(ServiceModule).Assembly)
                 .Where(t => typeof(IService).IsAssignableFrom(t))
-                .AsImplementedInterfaces();            
+                .AsImplementedInterfaces();
+
+            builder.RegisterType<DatabaseRestoreService>()
+                .AsImplementedInterfaces();
         }
     }
 }
